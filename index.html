@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>	
+	<head>
+		
+		<title>Pepe el macarra</title>
+		
+	</head>
+	<body>
+	
+	<canvas id="pepepaseo" width="700" height="350" style="border:2px solid #d3d3d3;">
+	</canvas> 
+	</body>
+<script>
+
+    var c = document.getElementById("pepepaseo");
+    var ctx = c.getContext("2d");
+    var img = new Image();
+    var x=0,y=0;
+    var presionado={37:false,38:false,39:false,40:false};
+    img.src= "sprites/pepelemacarra.png";
+    img.onload = function(){
+	ctx.clearRect(0,0,700,350);
+        ctx.drawImage(img, x, y);
+	
+	caminar();
+       	
+   
+        
+    }
+    
+    document.addEventListener('keydown',function(event){
+        presionado[event.keyCode]=true;
+	
+	
+    });
+
+    document.addEventListener('keyup',function(event){
+        presionado[event.keyCode]=false;
+	
+    });
+
+
+    function caminar(){
+		
+		var incrementoX=0;
+		var incrementoY=0;
+		var v=3 //variación
+		if(presionado[39]==true){
+		    incrementoX+=v;
+		}
+		if(presionado[38]){
+		    incrementoY+=-v;
+		}
+		if(presionado[37]){
+		    incrementoX+=-v;
+		}
+		if(presionado[40]){
+		    incrementoY+=v;
+		}
+	
+		if(x==0){
+		    if(incrementoX>0){
+			x=x+incrementoX;
+		    }
+		}else if(x>=700-60){
+		    if(incrementoX<0){
+			x=x+incrementoX;
+		    }
+		}else{
+		    x=x+incrementoX;
+		}
+		if(y==0){
+		    if(incrementoY>0){
+			y=y+incrementoY;
+		    }
+		}else if(y>=350-150){
+		    if(incrementoY<0){
+			y=y+incrementoY;
+		    }
+		}else{
+		    y=y+incrementoY;
+		}
+
+	
+		ctx.clearRect(0,0,700,350);
+		ctx.drawImage(img, x, y);
+		setTimeout(caminar,10)
+    }
+    
+
+    
+    
+
+</script>
+
+</html>
